@@ -1,0 +1,54 @@
+<section class="max-w-md mx-auto bg-[#F7F1EA] rounded-2xl p-5">
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-bold text-[#8B3A0F]">Suggested Companions</h3>
+
+    @if (hasMore) {
+      <button
+        type="button"
+        (click)="showMore()"
+        class="text-sm font-semibold text-[#FF7A12] hover:underline">
+        See All
+      </button>
+    }
+  </div>
+
+  <ul class="space-y-3">
+    @for (p of visiblePeople; track p.name) {
+      <li class="flex items-center gap-3">
+        <img
+          [src]="p.img"
+          [alt]="p.name"
+          (error)="onImgError($event, p.name)"
+          class="w-12 h-12 rounded-full object-cover bg-[#FFE3D0] ring-2 ring-[#FF7A12] ring-offset-2 ring-offset-[#F7F1EA]" />
+
+        <div class="flex-1 min-w-0">
+          <p class="font-semibold text-[#3B2A20] truncate">{{ p.name }}</p>
+          <p class="text-sm text-[#8A7B70] truncate">{{ p.sub }}</p>
+        </div>
+
+        <button
+          type="button"
+          (click)="toggleFollow(p)"
+          class="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold transition border"
+          [class]="p.isFriend
+            ? 'bg-transparent text-[#3B2A20] border-[#3B2A20] hover:bg-[#FFE3D0]'
+            : 'bg-[#FF7A12] text-white border-[#FF7A12] hover:bg-[#E86A05]'">
+          @if (p.isFriend) {
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12l5 5l10 -10" />
+            </svg>
+            Friends
+          } @else {
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+              <path d="M16 19h6" />
+              <path d="M19 16v6" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+            </svg>
+            Follow
+          }
+        </button>
+      </li>
+    }
+  </ul>
+</section>

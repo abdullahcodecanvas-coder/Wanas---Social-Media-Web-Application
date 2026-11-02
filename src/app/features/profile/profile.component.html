@@ -1,0 +1,249 @@
+<section class="profile" aria-labelledby="profile-name">
+  @if (user(); as u) {
+    <!-- Cover -->
+    <div class="profile__cover" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <div class="profile__head">
+      <div class="avatar-wrap">
+        @if (photo(); as src) {
+          <img class="avatar" [src]="src" [alt]="displayName()" />
+        } @else {
+          <span class="avatar avatar--fallback">{{ initial() }}</span>
+        }
+
+        <button
+          type="button"
+          class="avatar-edit"
+          aria-label="Change profile photo"
+          [disabled]="saving()"
+          (click)="fileInput.click()"
+        >
+          <i class="fa-solid fa-camera" aria-hidden="true"></i>
+        </button>
+
+        <input
+          #fileInput
+          type="file"
+          accept="image/png,image/jpeg,image/webp"
+          hidden
+          (change)="onFileSelected($event)"
+        />
+      </div>
+
+      <div class="profile__identity">
+        <h1 id="profile-name">{{ displayName() }}</h1>
+        @if (u.username) {
+          <p class="profile__username">&#64;{{ u.username }}</p>
+        }
+      </div>
+
+      <div class="profile__actions">
+        <button type="button" class="btn btn--primary" [disabled]="saving()" (click)="fileInput.click()">
+          {{ saving() ? 'Saving...' : 'Change photo' }}
+        </button>
+
+        @if (hasCustomPhoto()) {
+          <button type="button" class="btn btn--outline" [disabled]="saving()" (click)="removePhoto()">
+            Remove photo
+          </button>
+        }
+
+        <label class="share-toggle">
+          <input type="checkbox" [checked]="shareToFeed()" (change)="shareToFeed.set(!shareToFeed())" />
+          Share new photo to my feed
+        </label>
+      </div>
+    </div>
+
+    <!-- Feedback -->
+    <div class="feedback" role="status" aria-live="polite">
+      @if (message(); as m) {
+        <p class="feedback__msg" [class.feedback__msg--error]="m.type === 'error'">
+          {{ m.text }}
+        </p>
+      }
+    </div>
+
+    <!-- Details -->
+    @if (details().length) {
+      <div class="card">
+        <h2>About</h2>
+        <ul class="details">
+          @for (row of details(); track row.label) {
+            <li class="details__row">
+              <i [class]="row.icon + ' details__icon'" aria-hidden="true"></i>
+              <span class="details__label">{{ row.label }}</span>
+              <span class="details__value">{{ row.value }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+
+    <!-- My posts -->
+    <div class="posts">
+      <h2 class="posts__title">My posts</h2>
+
+      @if (postsLoading()) {
+        @for (i of [1, 2]; track i) {
+          <div class="post-card" aria-busy="true">
+            <span class="skeleton skeleton--line"></span>
+            <span class="skeleton skeleton--line skeleton--short"></span>
+            <span class="skeleton skeleton--block"></span>
+          </div>
+        }
+      } @else if (postsError()) {
+        <div class="state state--inline">
+          <h2>Couldn't load your posts</h2>
+          <p>Check your connection and try again.</p>
+          <button type="button" class="btn btn--primary" (click)="loadPosts()">Try again</button>
+        </div>
+      } @else {
+        @for (post of posts(); track post._id) {
+          <article class="post-card">
+            <!-- Header -->
+            <div class="post-header">
+              @if (post.user?.photo) {
+                <img class="post-avatar" [src]="post.user.photo" [alt]="post.user.name" />
+              } @else {
+                <span class="post-avatar post-avatar--fallback">{{ post.user?.name?.charAt(0) }}</span>
+              }
+
+              <div class="post-meta">
+                <span class="post-author">{{ post.user?.name }}</span>
+                <div class="post-sub">
+                  <span>&#64;{{ post.user?.username }}</span>
+                  <span>{{ timeAgo(post.createdAt) }}</span>
+                  @if (post.privacy === 'only_me') {
+                    <span class="post-badge">Only me</span>
+                  }
+                </div>
+              </div>
+
+              <!-- Menu -->
+              <div class="post-menu">
+                <button
+                  class="menu-btn"
+                  type="button"
+                  aria-label="More options"
+                  (click)="toggleMenu(post._id, $event)"
+                >
+                  <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M4 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                    <path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                    <path d="M18 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                  </svg>
+                </button>
+
+                @if (openMenuId() === post._id) {
+                  <div class="menu-dropdown" (click)="$event.stopPropagation()">
+                    <a class="menu-item" [routerLink]="['/detalisPost', post._id]">
+                      <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                      </svg>
+                      View Details
+                    </a>
+
+                    <button class="menu-item danger" type="button" (click)="deletePost(post._id)">
+                      <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M4 7l16 0" />
+                        <path d="M10 11l0 6" />
+                        <path d="M14 11l0 6" />
+                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                      </svg>
+                      Delete Post
+                    </button>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- Body -->
+            @if (post.body) {
+              <p class="post-text">{{ post.body }}</p>
+            }
+
+            <!-- Shared (original) post -->
+            @if (post.isShare && post.sharedPost) {
+              <div class="shared-card">
+                <div class="post-header">
+                  @if (post.sharedPost.user?.photo) {
+                    <img class="post-avatar post-avatar--sm" [src]="post.sharedPost.user.photo" [alt]="post.sharedPost.user.name" />
+                  }
+                  <div class="post-meta">
+                    <span class="post-author">{{ post.sharedPost.user?.name }}</span>
+                    <div class="post-sub">
+                      <span>&#64;{{ post.sharedPost.user?.username }}</span>
+                      <span>{{ timeAgo(post.sharedPost.createdAt) }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                @if (post.sharedPost.body) {
+                  <p class="post-text">{{ post.sharedPost.body }}</p>
+                }
+                @if (post.sharedPost.image) {
+                  <img class="post-image" [src]="post.sharedPost.image" [alt]="post.sharedPost.body" />
+                }
+              </div>
+            }
+
+            <!-- Image -->
+            @if (post.image) {
+              <img class="post-image" [src]="post.image" [alt]="post.body" />
+            }
+
+            <!-- Footer -->
+            <div class="post-footer">
+              <button class="pill" type="button" [class.active]="post.isLiked" (click)="likePost(post)">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                </svg>
+                Warm Hearts
+                <span>{{ likesCount(post) }}</span>
+              </button>
+
+              <a class="foot-btn" [routerLink]="['/detalisPost', post._id]">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path d="M8 9h8" />
+                  <path d="M8 13h6" />
+                  <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12" />
+                </svg>
+                Comments
+                <span>{{ post.commentsCount ?? 0 }}</span>
+              </a>
+
+              <button
+                class="foot-btn push"
+                type="button"
+                aria-label="Save"
+                [class.active]="post.isBookmarked"
+                (click)="toggleBookmark(post)"
+              >
+                <svg class="icon" viewBox="0 0 24 24">
+                  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4" />
+                </svg>
+              </button>
+            </div>
+          </article>
+        } @empty {
+          <div class="state state--inline">
+            <i class="fa-regular fa-pen-to-square state__icon" aria-hidden="true"></i>
+            <h2>No posts yet</h2>
+            <p>Posts you publish will show up here.</p>
+          </div>
+        }
+      }
+    </div>
+  } @else {
+    <!-- No user in localStorage -->
+    <div class="state">
+      <i class="fa-regular fa-user state__icon" aria-hidden="true"></i>
+      <h2>We couldn't find your profile</h2>
+      <p>Log in again to load your account details.</p>
+    </div>
+  }
+</section>

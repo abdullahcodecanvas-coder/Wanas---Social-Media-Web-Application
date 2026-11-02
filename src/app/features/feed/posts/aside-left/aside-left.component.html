@@ -1,0 +1,49 @@
+<aside class="sidebar">
+  <div class="user-card">
+  <div class="user-avatar rounded-3xl">
+    @if (photo(); as src) {
+      <img [src]="src" [alt]="user()?.name ?? 'Profile'" class="w-full" />
+    } @else {
+      <svg class="icon" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>
+    }
+  </div>
+  <div class="user-info">
+    <span class="user-name">{{ user()?.name ?? user()?.username ?? 'Guest' }}</span>
+    @if (user()?.username) {
+      <span class="user-handle">&#64;{{ user()?.username }}</span>
+    }
+  </div>
+</div>
+
+  <nav class="nav">
+    <a class="nav-link " routerLink="/feed" routerLinkActive="active">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
+      Home
+    </a>
+
+    <a class="nav-link" routerLink="/profile" routerLinkActive="active">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>
+      Profile
+    </a>
+
+  <a routerLink="/notifications" 
+     routerLinkActive="active" 
+     class="nav-link">
+    <i class="fa-solid fa-bell text-base shrink-0 cursor-pointer"></i>
+    Notifications
+  </a>
+    <a class="nav-link" routerLink="/setting" routerLinkActive="active">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+      Settings
+    </a>
+
+
+      <button id="logoutBtn" 
+              type="button"
+              (click)="logout()"
+              class="flex w-full cursor-pointer items-center gap-3 rounded-full px-4 py-2.5 text-left font-medium text-red-600 hover:bg-red-50">
+        <i class="fa-solid fa-right-from-bracket text-base shrink-0"></i>
+        Logout
+      </button>
+  </nav>
+</aside>

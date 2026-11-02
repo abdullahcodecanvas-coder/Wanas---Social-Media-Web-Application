@@ -1,0 +1,63 @@
+<section class="details">
+  <button type="button" class="back-btn" (click)="goBack()">
+    <span aria-hidden="true">←</span> Back
+  </button>
+
+  @if (loading()) {
+    <div class="state">Loading post...</div>
+  } @else if (errorMsg()) {
+    <div class="state error">
+      <p>{{ errorMsg() }}</p>
+      <button type="button" class="back-btn" (click)="goBack()">Go back</button>
+    </div>
+  } @else if (post(); as p) {
+    <article class="card">
+      <!-- Header -->
+      <header class="post-header">
+        <img class="avatar" [src]="p.user.photo" [alt]="p.user.name" />
+        <div class="user-info">
+          <h2>{{ p.user.name }}</h2>
+          <span>&#64;{{ p.user.username }} · {{ p.createdAt | date: 'medium' }}</span>
+        </div>
+        <span class="privacy">{{ p.privacy }}</span>
+      </header>
+
+      <!-- Body -->
+      @if (p.body) {
+        <p class="post-body">{{ p.body }}</p>
+      }
+
+      @if (p.image) {
+        <img class="post-image" [src]="p.image" alt="Post image" />
+      }
+
+      <!-- Actions -->
+      <footer class="actions">
+        <span class="chip">♡ Warm Hearts {{ p.likesCount }}</span>
+        <span class="chip">💬 Comments {{ p.commentsCount }}</span>
+        <span class="chip">↗ Shares {{ p.sharesCount }}</span>
+        <span class="chip" [class.active]="p.bookmarked">
+          {{ p.bookmarked ? '🔖 Saved' : '🔖 Save' }}
+        </span>
+      </footer>
+    </article>
+
+    <!-- Comments -->
+    <div class="card comments">
+      <h3>Comments ({{ p.commentsCount }})</h3>
+
+      @if (p.topComment) {
+        <div class="comment">
+          <img class="avatar sm" [src]="p.topComment.commentCreator.photo" [alt]="p.topComment.commentCreator.name" />
+          <div class="comment-bubble">
+            <strong>{{ p.topComment.commentCreator.name }}</strong>
+            <span class="time">{{ p.topComment.createdAt | date: 'short' }}</span>
+            <p>{{ p.topComment.content }}</p>
+          </div>
+        </div>
+      } @else {
+        <p class="muted">No comments yet. Be the first to comment!</p>
+      }
+    </div>
+  }
+</section>

@@ -1,0 +1,112 @@
+:host {
+  display: block;
+  --side-bg: #f8f3ec;
+  --card-bg: #f1ebe3;
+  --text: #3b2a20;
+  --text-muted: #7a6f66;
+  --orange: #ff7a14;
+  --hover: #efe7dc;
+}
+
+:host-context(.dark) {
+  --side-bg: #231d19;
+  --card-bg: #2e2621;
+  --text: #f3ece4;
+  --text-muted: #b3a79b;
+  --hover: #3a3029;
+}
+
+.sidebar {
+  width: 100%;
+  max-width: 270px;
+  padding: 24px 22px;
+  background: var(--side-bg);
+  color: var(--text);
+}
+
+/* User card */
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  margin-bottom: 20px;
+  background: var(--card-bg);
+  border-radius: 12px;
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #3b2a20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-avatar .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.35;
+  min-width: 0;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.user-handle {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Nav */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  color: inherit;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.nav-link:hover {
+  background: var(--hover);
+}
+
+.nav-link.active {
+  background: var(--orange);
+  color: #3b2a20;
+  font-weight: 600;
+}
+
+/* Icons */
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

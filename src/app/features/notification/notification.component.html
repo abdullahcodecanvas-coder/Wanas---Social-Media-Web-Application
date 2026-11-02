@@ -1,0 +1,125 @@
+<section class="notifications" aria-labelledby="notifications-title">
+  <!-- Header -->
+  <header class="notifications__header">
+    <h1 id="notifications-title">Notifications</h1>
+
+    <button
+      type="button"
+      class="btn btn--ghost"
+      [disabled]="unreadCount() === 0"
+      (click)="markAllAsRead()"
+    >
+      Mark all as read
+    </button>
+  </header>
+
+  <!-- Tabs -->
+  <div class="tabs" role="tablist" aria-label="Filter notifications">
+    <button
+      type="button"
+      role="tab"
+      class="tab"
+      [class.tab--active]="filter() === 'all'"
+      [attr.aria-selected]="filter() === 'all'"
+      (click)="setFilter('all')"
+    >
+      All
+    </button>
+    <button
+      type="button"
+      role="tab"
+      class="tab"
+      [class.tab--active]="filter() === 'unread'"
+      [attr.aria-selected]="filter() === 'unread'"
+      (click)="setFilter('unread')"
+    >
+      Unread
+      @if (unreadCount() > 0) {
+        <span class="tab__badge">{{ unreadCount() }}</span>
+      }
+    </button>
+  </div>
+
+  <!-- Loading skeleton -->
+  @if (loading()) {
+    <ul class="list" aria-busy="true">
+      @for (i of [1, 2, 3, 4, 5]; track i) {
+        <li class="item item--skeleton">
+          <span class="avatar skeleton"></span>
+          <div class="item__body">
+            <span class="skeleton skeleton--line"></span>
+            <span class="skeleton skeleton--line skeleton--short"></span>
+          </div>
+        </li>
+      }
+    </ul>
+  } @else if (error()) {
+    <!-- Error -->
+    <div class="state">
+      <i class="fa-solid fa-triangle-exclamation state__icon" aria-hidden="true"></i>
+      <h2>Couldn't load notifications</h2>
+      <p>Check your connection and try again.</p>
+      <button type="button" class="btn btn--primary" (click)="retry()">Try again</button>
+    </div>
+  } @else {
+    <!-- List -->
+    <ul class="list">
+      @for (item of notifications(); track item.id) {
+        <li
+          class="item"
+          [class.item--unread]="!item.isRead"
+          tabindex="0"
+          (click)="markAsRead(item)"
+          (keydown.enter)="markAsRead(item)"
+        >
+          @if (item.actorPhoto) {
+            <img class="avatar" [src]="item.actorPhoto" [alt]="item.actorName" />
+          } @else {
+            <span class="avatar avatar--fallback">{{ item.actorName.charAt(0) }}</span>
+          }
+
+          <div class="item__body">
+            <p class="item__text">
+              <strong>{{ item.actorName }}</strong> {{ item.text }}
+            </p>
+            <time class="item__time" [attr.datetime]="item.createdAt">
+              {{ timeAgo(item.createdAt) }}
+            </time>
+          </div>
+
+          @if (!item.isRead) {
+            <span class="dot" aria-label="Unread"></span>
+          }
+        </li>
+      } @empty {
+        <li class="state">
+          <i class="fa-regular fa-bell state__icon" aria-hidden="true"></i>
+          @if (filter() === 'unread') {
+            <h2>You're all caught up</h2>
+          } @else {
+            <h2>No notifications yet</h2>
+          }
+          @if (filter() === 'unread') {
+            <p>New activity will show up here.</p>
+          } @else {
+            <p>When someone likes, comments or follows you, you'll see it here.</p>
+          }
+        </li>
+      }
+    </ul>
+
+    <!-- Load more -->
+    @if (hasMore()) {
+      <div class="more">
+        <button
+          type="button"
+          class="btn btn--outline"
+          [disabled]="loadingMore()"
+          (click)="loadMore()"
+        >
+          {{ loadingMore() ? 'Loading...' : 'Load more' }}
+        </button>
+      </div>
+    }
+  }
+</section>

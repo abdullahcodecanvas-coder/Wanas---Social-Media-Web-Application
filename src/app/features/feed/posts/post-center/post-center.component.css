@@ -1,0 +1,488 @@
+:host {
+  display: block;
+  --card-bg: #f6f2ec;
+  --popup-bg: #fffdf9;
+  --hover: #f1ebe3;
+  --btn-bg: #e8e0d6;
+  --text: #2b2623;
+  --text-muted: #7a6f66;
+  --accent-bg: #f7d9c4;
+  --accent-text: #8a4a22;
+  --danger: #c62828;
+}
+.no-posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 50px 20px;
+  margin-top: 15px;
+  border-radius: 16px;
+  background-color: #EFEAE4;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.no-posts i {
+  font-size: 35px;
+  color: #F97316;
+  margin-bottom: 5px;
+}
+
+.no-posts h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #44403C;
+}
+
+.no-posts p {
+  font-size: 14px;
+  color: #78716C;
+  max-width: 280px;
+  line-height: 1.6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* لو الثيم الغامق عندك بيشتغل بكلاس على body أو html، غيّر السلكتور */
+:host-context(.dark) {
+  --card-bg: #2a2420;
+  --popup-bg: #352d28;
+  --hover: #43392f;
+  --btn-bg: #3d332c;
+  --text: #f3ece4;
+  --text-muted: #b3a79b;
+  --accent-bg: #5a3a22;
+  --accent-text: #ffd9bd;
+  --danger: #ff8a80;
+}
+
+.post-card {
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 16px;
+  position: relative;
+}
+
+/* Header */
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.post-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.post-author {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.post-time {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Content */
+.post-text {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 12px 0;
+}
+
+.post-image {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+  object-fit: cover;
+}
+
+/* Footer */
+.post-footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 12px;
+  font-size: 12px;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 500;
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.foot-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.foot-btn.icon {
+  font-size: 16px;
+}
+
+.push {
+  margin-inline-start: auto;
+}
+
+/* Three-dots menu */
+.post-menu {
+  margin-inline-start: auto;
+  position: relative;
+}
+
+.menu-btn {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--btn-bg);
+  color: inherit;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  inset-inline-end: 0;
+  z-index: 50;
+  width: 200px;
+  padding: 6px;
+  border-radius: 14px;
+  background: var(--popup-bg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.menu-dropdown[hidden] {
+  display: none;
+}
+
+.menu-item,
+.privacy-option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.menu-item {
+  gap: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.menu-item:hover {
+  background: var(--hover);
+}
+
+.menu-item.danger {
+  color: var(--danger);
+}
+
+/* Privacy options */
+.privacy-group {
+  margin: 2px 0 4px;
+  padding: 4px;
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.privacy-option {
+  justify-content: space-between;
+  padding: 8px 12px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+.privacy-option:hover {
+  background: var(--hover);
+}
+
+.privacy-option i {
+  visibility: hidden;
+}
+
+.privacy-option.selected {
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  font-weight: 500;
+}
+
+.privacy-option.selected i {
+  visibility: visible;
+}
+/* الأيقونات */
+.icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pill .icon,
+.foot-btn .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.menu-btn .icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* علامة الصح تظهر على الخيار المختار بس */
+.privacy-option .check {
+  margin-inline-start: auto;
+  visibility: hidden;
+}
+
+.privacy-option.selected .check {
+  visibility: visible;
+}
+:host { display: block; min-width: 0; }
+
+.post-card {
+  width: 100%;
+  max-width: 100%;
+
+  box-sizing: border-box;
+}
+
+.post-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.post-image {
+  display: block;
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.post-card {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  /* شيل overflow: hidden من هنا */
+}
+
+.post-image {
+  display: block;
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.post-menu { position: relative; margin-left: auto; }
+
+.menu-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 20;
+}
+.post-card.menu-open {
+  position: relative;
+  z-index: 30;
+}
+:host { display: block; min-width: 0; width: 100%; }
+
+.post-card {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: clip;     /* يقص الأفقي بس ومش بيقص المنيو من تحت */
+  overflow-y: visible;
+}
+.post-image {
+  width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  background: #F8F4EF;
+  border-radius: 12px;
+}
+.pill .icon {
+  fill: none;
+  stroke: currentColor;
+  transition: fill 0.25s ease, stroke 0.25s ease, transform 0.25s ease;
+}
+
+/* القلب بعد اللايك */
+.pill.active {
+  color: #F97316;
+}
+
+.pill.active .icon {
+  fill: #F97316;
+  stroke: #F97316;
+  animation: heart-pop 0.45s ease;
+}
+
+@keyframes heart-pop {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.5); }
+  60%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+.privacy-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+  margin: 4px 0;
+  border-top: 1px solid #e7ded4;
+  border-bottom: 1px solid #e7ded4;
+}
+
+.privacy-title {
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #a8a29e;
+  text-transform: uppercase;
+}
+
+.privacy-option {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #57534e;
+  text-align: left;
+  transition: 0.2s;
+}
+
+.privacy-option:hover {
+  background: #f5eee7;
+}
+
+.privacy-option.selected {
+  background: #FDDCC4;
+  color: #C66100;
+  font-weight: 600;
+}
+
+.privacy-option .icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.privacy-check {
+  margin-left: auto;
+  font-weight: bold;
+}
+
+
+.foot-btn svg path {
+  transition: fill .2s ease, stroke .2s ease;
+}
+.foot-btn svg path {
+  transition: fill .2s ease, stroke .2s ease;
+}
+
+
+.foot-btn svg path {
+  fill: none;
+  stroke: currentColor;
+  transition: fill .2s ease, stroke .2s ease;
+}
+
+
+.foot-btn:not(.active):focus svg path {
+  fill: none;
+  stroke: currentColor;
+}
+.foot-btn svg path {
+  fill: none;
+  stroke: currentColor;
+  transition: fill .2s ease, stroke .2s ease;
+}
+
+.foot-btn.active svg path {
+  fill: #ff7a00;
+  stroke: #ff7a00;
+}
+
+.foot-btn:focus { outline: none; }
+.foot-btn:not(.active):focus svg path { fill: none; stroke: currentColor; }
+
+.shared-card {
+  margin: 0.5rem 0 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e7e0d8;
+  border-radius: 0.75rem;
+  background: #f8f4ef;
+}
+
+.shared-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.shared-avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  object-fit: cover;
+}

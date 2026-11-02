@@ -1,0 +1,17 @@
+.colorPage {
+  background: linear-gradient(160deg, #fff4ec 0%, #fde9dc 45%, #fffaf6 100%);
+}
+
+.colorPage {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 190, 150, 0.35), transparent 55%),
+    #fffaf6;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(230, 120, 50, 0.08);
+  backdrop-filter: blur(8px);
+}

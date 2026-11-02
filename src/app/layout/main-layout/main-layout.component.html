@@ -1,0 +1,81 @@
+<nav class="sticky top-0 z-50 flex items-center gap-2 border-b border-orange-100 bg-white/70 px-3 py-2.5 backdrop-blur md:gap-4 md:px-6 md:py-3">
+
+  <!-- Logo -->
+  <a routerLink="/" class="flex items-center gap-2.5">
+    <img src="/images/logo.wanas.ico" alt="Wanas logo" class="size-9 rounded-full object-cover">
+    <span class="hidden text-xl font-bold text-cocoa md:inline">Wanas</span>
+  </a>
+
+  <!-- Search -->
+  <label class="mx-auto flex max-w-md flex-1 items-center gap-2.5 rounded-full bg-sand px-4 py-2.5 text-muted">
+  <i class="fa-solid fa-magnifying-glass text-base shrink-0"></i>
+
+  <input
+    type="search"
+    placeholder="Search Wanas..."
+    (input)="searchUsers($event)"
+    class="min-w-0 flex-1 rounded-full bg-transparent text-ink outline-none placeholder:text-muted/80"
+  />
+</label>
+
+  <!-- User menu -->
+  <div class="relative ml-auto">
+
+    <button id="avatarBtn"
+            type="button"
+            aria-label="User menu"
+            aria-haspopup="true"
+            [attr.aria-expanded]="isMenuOpen()"
+            (click)="toggleMenu($event)"
+            class="block size-10 overflow-hidden rounded-full bg-peach transition hover:ring-4 hover:ring-peach focus:ring-4 focus:ring-peach cursor-pointer">
+      <img
+        [src]="avatar()"
+        [alt]="user()?.name ?? 'User avatar'"
+        (error)="onAvatarError($event)"
+        class="size-full object-cover"
+      />
+    </button>
+
+    <nav id="dropdown"
+         [class.hidden]="!isMenuOpen()"
+         (click)="$event.stopPropagation()"
+         class="absolute lg:hidden right-0 top-full mt-3 w-56 rounded-2xl border border-orange-100 bg-white p-2 shadow-xl">
+
+      <!-- Small screens only -->
+      <div>
+        <a class="nav-link" routerLink="/feed" routerLinkActive="active">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
+          Home
+        </a>
+
+        <a class="nav-link" routerLink="/profile" routerLinkActive="active">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>
+          Profile
+        </a>
+
+        <a class="nav-link" routerLink="/notifications" routerLinkActive="active">
+          <i class="fa-solid fa-bell text-base shrink-0 cursor-pointer"></i>
+          Notifications
+        </a>
+
+        <a class="nav-link" routerLink="/setting" routerLinkActive="active">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/></svg>
+          Settings
+        </a>
+
+        <div class="mx-1.5 my-2 h-px bg-orange-100"></div>
+      </div>
+
+      <!-- Always visible -->
+      <button id="logoutBtn"
+              type="button"
+              (click)="logout()"
+              class="flex w-full cursor-pointer items-center gap-3 rounded-full px-4 py-2.5 text-left font-medium text-red-600 hover:bg-red-50">
+        <i class="fa-solid fa-right-from-bracket text-base shrink-0"></i>
+        Logout
+      </button>
+    </nav>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

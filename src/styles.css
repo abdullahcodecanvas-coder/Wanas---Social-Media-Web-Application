@@ -1,0 +1,176 @@
+
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+@import 'tailwindcss';
+@font-face {
+    font-family: PlusJakartaSans ;
+    src: url(/public/fonts/PlusJakartaSans.ttf);
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: block;
+}
+
+:root {
+  --bg-base: linear-gradient(135deg, #FFFDFB 0%, #FFF6EE 55%, #FDE9D7 100%);
+  --bg-glow-left: radial-gradient(circle at 8% 10%, rgba(255, 217, 188, 0.5) 0%, rgba(255, 217, 188, 0) 45%);
+  --bg-glow-right: radial-gradient(circle at 90% 95%, rgba(255, 178, 122, 0.45) 0%, rgba(255, 178, 122, 0) 60%);
+}
+
+[data-theme='dark'] {
+  --bg-base: linear-gradient(135deg, #1A1310 0%, #211711 55%, #2E1E15 100%);
+  --bg-glow-left: radial-gradient(circle at 8% 10%, rgba(122, 74, 46, 0.35) 0%, rgba(122, 74, 46, 0) 45%);
+  --bg-glow-right: radial-gradient(circle at 90% 95%, rgba(232, 89, 12, 0.28) 0%, rgba(232, 89, 12, 0) 60%);
+}
+
+html,
+body {
+font-family: PlusJakartaSans ;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background-image: var(--bg-glow-right), var(--bg-glow-left), var(--bg-base);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  transition: background 0.3s ease;
+}
+
+:root {
+  /* headline-xl — Display Hero */
+  --headline-xl-size: 40px;
+  --headline-xl-line: 48px;
+  --headline-xl-weight: 800;
+
+  /* headline-lg — Heading 1 */
+  --headline-lg-size: 32px;
+  --headline-lg-line: 40px;
+  --headline-lg-weight: 700;
+
+  /* headline-md — Heading 2 */
+  --headline-md-size: 24px;
+  --headline-md-line: 32px;
+  --headline-md-weight: 700;
+
+  /* headline-sm — Subheading */
+  --headline-sm-size: 20px;
+  --headline-sm-line: 28px;
+  --headline-sm-weight: 600;
+
+  /* body-lg — Body Large */
+  --body-lg-size: 18px;
+  --body-lg-line: 28px;
+  --body-lg-weight: 400;
+
+  /* body-md — Body Medium */
+  --body-md-size: 16px;
+  --body-md-line: 24px;
+  --body-md-weight: 400;
+
+  /* body-sm — Body Small / Caption */
+  --body-sm-size: 14px;
+  --body-sm-line: 20px;
+  --body-sm-weight: 400;
+
+  /* label-sm — Micro Overline */
+  --label-sm-size: 11px;
+  --label-sm-line: 16px;
+  --label-sm-weight: 600;
+}
+
+.headline-xl {
+  font-size: var(--headline-xl-size);
+  line-height: var(--headline-xl-line);
+  font-weight: var(--headline-xl-weight);
+}
+
+.headline-lg {
+  font-size: var(--headline-lg-size);
+  line-height: var(--headline-lg-line);
+  font-weight: var(--headline-lg-weight);
+}
+
+.headline-md {
+  font-size: var(--headline-md-size);
+  line-height: var(--headline-md-line);
+  font-weight: var(--headline-md-weight);
+}
+
+.headline-sm {
+  font-size: var(--headline-sm-size);
+  line-height: var(--headline-sm-line);
+  font-weight: var(--headline-sm-weight);
+}
+
+.body-lg {
+  font-size: var(--body-lg-size);
+  line-height: var(--body-lg-line);
+  font-weight: var(--body-lg-weight);
+}
+
+.body-md {
+  font-size: var(--body-md-size);
+  line-height: var(--body-md-line);
+  font-weight: var(--body-md-weight);
+}
+
+.body-sm {
+  font-size: var(--body-sm-size);
+  line-height: var(--body-sm-line);
+  font-weight: var(--body-sm-weight);
+}
+
+.label-sm {
+  font-size: var(--label-sm-size);
+  line-height: var(--label-sm-line);
+  font-weight: var(--label-sm-weight);
+  /* Overline عادةً بتكون uppercase مع letter-spacing خفيف، لو عايزه: */
+  /* text-transform: uppercase; letter-spacing: 0.05em; */
+}
+
+/* ===== ألوان Wanas ===== */
+.bg-cream { background-color: #fdf8f1 !important; }
+.bg-sand { background-color: #f7f1e8 !important; }
+.bg-peach { background-color: #fddcc4 !important; }
+.bg-brand { background-color: #f97316 !important; }
+.bg-cocoa { background-color: #9a3f0a !important; }
+
+.text-brand { color: #f97316 !important; }
+.text-clay { color: #a3480f !important; }
+.text-cocoa { color: #9a3f0a !important; }
+.text-ink { color: #1c1917 !important; }
+.text-muted { color: #6b5b4f !important; }
+
+.hover\:bg-clay:hover { background-color: #a3480f !important; }
+.hover\:text-clay:hover { color: #a3480f !important; }
+.placeholder\:text-muted\/80::placeholder { color: rgba(107, 91, 79, .8) !important; }
+
+/* ===== الخطوط ===== */
+body { font-family: "Plus Jakarta Sans", "Cairo", system-ui, sans-serif; }
+.font-ar { font-family: "Cairo", sans-serif !important; }
+
+/* ===== الخلفية والظل ===== */
+.hero-glow {
+  background:
+    radial-gradient(ellipse 50% 45% at 50% 22%, rgba(253, 186, 140, .45), transparent 70%),
+    #fdf8f1;
+}
+.zero-shadow { filter: drop-shadow(0 14px 18px rgba(249, 115, 22, .28)); }
+
+/* ===== حركة الصفر وشارة القهوة ===== */
+@keyframes floatZero {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-22px); }
+}
+@keyframes tilt {
+  0%, 100% { transform: rotate(10deg) translateY(0); }
+  50% { transform: rotate(6deg) translateY(-4px); }
+}
+.animate-floatZero { animation: floatZero 2.4s ease-in-out infinite; }
+.animate-tilt { animation: tilt 3s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-floatZero, .animate-tilt { animation: none !important; }
+}

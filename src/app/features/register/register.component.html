@@ -1,0 +1,427 @@
+<section class="grid grid-cols-1 lg:grid-cols-2 items-stretch gap-4 p-3">
+
+  <!-- ================= FORM CARD ================= -->
+  <div class="bg-white border-2 border-[#F5F0E9] shadow-sm rounded-3xl p-4 sm:p-6 flex flex-col gap-4 w-full">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <!-- Login & Register -->
+      <div class="bg-[#FAF6F0] p-1.5 border-2 border-[#E5DDD3] rounded-2xl flex items-center gap-1 w-full sm:w-auto">
+        <button type="button" routerLink="/login" routerLinkActive="!text-white !bg-[#F97316]"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="headline-md flex-1 sm:flex-none text-[#C17F32] px-5 py-2 rounded-xl transition-all">
+          Log In
+        </button>
+        <button type="button" routerLink="/register" routerLinkActive="!text-white !bg-[#F97316]"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="headline-md flex-1 sm:flex-none text-[#C17F32] px-5 py-2 rounded-xl transition-all">
+          Register
+        </button>
+      </div>
+
+      <!-- Instant Join -->
+      <div class="flex justify-center sm:justify-end">
+        <button type="button"
+          class="text-[#C66100] bg-[#FEEEE3] hover:bg-[#FDE4D0] px-5 py-2 rounded-2xl headline-sm whitespace-nowrap transition-colors">
+          Instant Join ⚡
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <h1 class="text-[#261A12] headline-lg">Join the Wanas family 🧡</h1>
+      <p class="text-[#916D62] body-lg">Create your account in a minute and start sharing moments and meeting new people.</p>
+    </div>
+
+    <form [formGroup]="RegisterForm" (ngSubmit)="onSubmit()"  class="flex flex-col gap-4">
+
+      <!-- Name + Username -->
+      <div  class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-0.5">
+          <label for="name" class="body-lg">
+            <i class="fa-solid fa-address-card text-[#E75F0F]"></i> Full Name
+          </label>
+          <div class="relative">
+            <input formControlName="name" type="text" id="name" placeholder="e.g. Yasmin Omar"
+            class="w-full rounded-3xl border-2 border-[#d8d8d7] bg-[#FAF6F0] px-4 py-3 outline-none focus:border-[#e68c58] focus:ring-0 headline-sm" 
+            [class]="{
+              'border-green-800':RegisterForm.get('name')?.valid ,
+              'border-red-700':RegisterForm.get('name')?.invalid && RegisterForm.get('name')?.touched
+            }"
+            >
+             @if (RegisterForm.get('name')?.valid) {
+      <i class="fa-solid fa-circle-check absolute right-4 top-1/2 -translate-y-1/2 text-green-700"></i>
+    } @else if (RegisterForm.get('name')?.invalid && RegisterForm.get('name')?.touched) {
+      <i class="fa-solid fa-circle-xmark absolute right-4 top-1/2 -translate-y-1/2 text-red-700"></i>
+    }
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-0.5">
+          <label for="username" class="body-lg">
+            <i class="fa-solid fa-at text-[#E75F0F]"></i> User Name
+          </label>
+          <div class="relative">
+            <input  autocomplete="username"  formControlName="username" type="text" id="username" placeholder="wanas_2007"
+          [class]="{
+              'border-green-800':RegisterForm.get('username')?.valid ,
+              'border-red-700':RegisterForm.get('username')?.invalid && RegisterForm.get('name')?.touched
+            }"
+            class="w-full rounded-3xl border-2 border-[#d8d8d7] bg-[#FAF6F0] px-4 py-3 outline-none focus:border-[#e68c58] focus:ring-0 headline-sm"
+            >
+             @if (RegisterForm.get('username')?.valid) {
+      <i class="fa-solid fa-circle-check absolute right-4 top-1/2 -translate-y-1/2 text-green-700"></i>
+    } @else if (RegisterForm.get('username')?.invalid && RegisterForm.get('username')?.touched) {
+      <i class="fa-solid fa-circle-xmark absolute right-4 top-1/2 -translate-y-1/2 text-red-700"></i>
+    }
+          </div>
+        </div>
+      </div>
+
+      @if(RegisterForm.get("name")?.invalid && RegisterForm.get("name")?.touched ){
+    <div class="mt-1 flex items-start gap-2 rounded-2xl border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-sm text-[#B91C1C]">
+    <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+    @if (RegisterForm.get("name")?.hasError('required')) {
+       <span class="body-md" >Name  is required.</span>
+    }@else{
+      <span class="body-md">
+       Use letters only, first and last name (e.g. Yasmin Omar). 
+    </span>
+    }
+  </div>
+      }
+@if (RegisterForm.get('username')?.invalid && RegisterForm.get('username')?.touched) {
+  <div class="mt-1 flex items-start gap-2 rounded-2xl border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-sm text-[#B91C1C]">
+    <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+    @if (RegisterForm.get('username')?.errors?.['required']) {
+      <span class="body-md" >Username is required.</span>
+    } @else {
+  <span class="body-md">     Username must be 3-30 characters: lowercase letters, numbers, or underscore only.
+</span>
+    }
+  </div>
+}
+      <!-- Email -->
+      <div class="flex flex-col gap-0.5">
+        <label for="email" class="body-lg">
+          <i class="fa-solid fa-envelope text-[#E75F0F]"></i> Email Address
+        </label>
+        <div class="relative">
+          <input  autocomplete="email" formControlName="email" type="email" id="email" placeholder="name@wanas.social"
+          class="w-full rounded-3xl border-2 border-[#d8d8d7] bg-[#FAF6F0] px-4 py-3 outline-none focus:border-[#e68c58] focus:ring-0 headline-sm" 
+          [class]="{
+              'border-green-800':RegisterForm.get('email')?.valid ,
+              'border-red-700':RegisterForm.get('email')?.invalid && RegisterForm.get('name')?.touched
+            }"
+          >
+          @if (RegisterForm.get('email')?.valid) {
+      <i class="fa-solid fa-circle-check absolute right-4 top-1/2 -translate-y-1/2 text-green-700"></i>
+    } @else if (RegisterForm.get('email')?.invalid && RegisterForm.get('email')?.touched) {
+      <i class="fa-solid fa-circle-xmark absolute right-4 top-1/2 -translate-y-1/2 text-red-700"></i>
+    }
+        </div>
+      </div>
+
+
+ @if( RegisterForm.get("email")?.invalid && RegisterForm.get("email")?.touched){
+   <div class="mt-1 flex items-start gap-2 rounded-2xl border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-sm text-[#B91C1C]">
+    <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+   @if ( RegisterForm.get("email")?.hasError('required')) {
+     <span class="body-md" >Email is required.</span>
+   }@else {
+    <span class="body-md" >Enter a valid email like name@wanas.social</span>
+   }
+  </div>
+
+ }
+
+      <!-- Gender -->
+      <fieldset class="flex flex-col gap-0.5">
+        <legend class="body-lg">
+          <i class="fa-solid fa-venus-mars text-[#E75F0F]"></i> Gender
+        </legend>
+
+        <div class="grid grid-cols-2 gap-3 mt-1">
+          <div>
+            <input type="radio"  formControlName="gender"   id="male" value="male" class="peer sr-only" checked>
+            <label for="male"
+              class="flex items-center justify-center gap-2 cursor-pointer rounded-3xl border-2 border-[#d8d8d7] bg-[#FAF6F0] px-4 py-3 headline-sm
+                     transition hover:border-[#e68c58]
+                     peer-checked:border-[#E75F0F] peer-checked:bg-[#FFF1E6]
+                     peer-focus-visible:ring-2 peer-focus-visible:ring-[#e68c58] peer-focus-visible:ring-offset-2">
+              <i class="fa-solid fa-person text-[#E75F0F]"></i> Male
+            </label>
+          </div>
+
+          <div>
+            <input type="radio"  formControlName="gender" id="female" value="female" class="peer sr-only">
+            <label for="female"
+              class="flex items-center justify-center gap-2 cursor-pointer rounded-3xl border-2 border-[#d8d8d7] bg-[#FAF6F0] px-4 py-3 headline-sm
+                     transition hover:border-[#e68c58]
+                     peer-checked:border-[#E75F0F] peer-checked:bg-[#FFF1E6]
+                     peer-focus-visible:ring-2 peer-focus-visible:ring-[#e68c58] peer-focus-visible:ring-offset-2">
+              <i class="fa-solid fa-person-dress text-[#E75F0F]"></i> Female
+            </label>
+          </div>
+        </div>
+      </fieldset>
+
+ @if(RegisterForm.get("gender")?.hasError('required') && RegisterForm.get('gender')?.untouched){
+   <div class="mt-1 flex items-start gap-2 rounded-2xl border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-sm text-[#B91C1C]">
+    <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+    <span class="body-md" >Gender is required.</span>
+  </div>
+
+ }
+
+
+
+
+      
+      <!-- Date of birth -->
+      <div class="flex flex-col gap-0.5">
+        <label for="birthdate" class="body-lg">
+          <i class="fa-solid fa-calendar-day text-[#E75F0F]"></i> Date Of Birth
+        </label>
+        <input  formControlName="dateOfBirth" type="date" id="birthdate"
+          class="w-full rounded-3xl border-2 border-[#d8d8d7] bg-[#FAF6F0] px-4 py-3 outline-none focus:border-[#e68c58] focus:ring-0 headline-sm">
+      </div>
+
+      
+    @if (RegisterForm.get("dateOfBirth")?.invalid && RegisterForm.get("dateOfBirth")?.touched) {
+  <div class="mt-1 flex items-start gap-2 rounded-2xl border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-sm text-[#B91C1C]">
+    <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+    @if (RegisterForm.get("dateOfBirth")?.errors?.['required']) {
+      <span class="body-md">Date of birth is required.</span>
+    } @else if (RegisterForm.get("dateOfBirth")?.errors?.['pattern']) {
+      <span class="body-md">Enter a valid date between 1950 and 2020.</span>
+    }
+  </div>
+}
+
+
+
+      <!-- Passwords -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-0.5">
+          <label for="password" class="body-lg">
+            <i class="fa-solid fa-key text-[#E75F0F]"></i> Password
+          </label>
+          <div class="relative">
+            <input autocomplete="new-password"   formControlName="password" [type]="showPassword ?'text' : 'password'" 
+            
+            id="password"
+              class="w-full rounded-3xl border-2 border-[#d8d8d7] bg-[#FAF6F0] ps-4 pe-12 py-3 outline-none focus:border-[#e68c58] focus:ring-0 headline-sm">
+            <button type="button"  (click)="togglePassword()"
+              class="absolute end-4 top-1/2 -translate-y-1/2 text-[#7a6a5f] hover:text-[#E75F0F]">
+              <i class="fa-regular " [ngClass]="showPassword? 'fa-eye-slash' : 'fa-eye'" ></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-0.5">
+          <label for="rePassword" class="body-lg">
+            <i class="fa-solid fa-shield-halved text-[#E75F0F]"></i> Confirm Password
+          </label>
+          <div class="relative">
+            <input autocomplete="new-password" formControlName="rePassword" [type]="showRePassword? 'text':'password'  " id="rePassword" 
+              class="w-full rounded-3xl border-2 border-[#d8d8d7] bg-[#FAF6F0] ps-4 pe-12 py-3 outline-none focus:border-[#e68c58] focus:ring-0 headline-sm">
+            <button type="button"  (click)="toggleRePassword()"
+              class="absolute end-4 top-1/2 -translate-y-1/2 text-[#7a6a5f] hover:text-[#E75F0F]">
+              <i class="fa-regular " [ngClass]="showRePassword?'fa-eye-slash' : 'fa-eye' " ></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      
+
+      @if( RegisterForm.get("password")?.invalid && RegisterForm.get("password")?.touched){
+   <div class="mt-1 flex items-start gap-2 rounded-2xl border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-sm text-[#B91C1C]">
+    <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+   @if ( RegisterForm.get("password")?.hasError('required')) {
+     <span class="body-md" >password is required.</span>
+   }@else {
+<span  class="body-md">Min 8 characters with uppercase, lowercase, a number and a symbol (@ $ ! % * ? & # _ -).</span>
+   }
+  </div>
+ }
+
+   @if(RegisterForm.get('rePassword')?.hasError('required') && RegisterForm.get("rePassword")?.touched ){
+   <div class="mt-1 flex items-start gap-2 rounded-2xl border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-sm text-[#B91C1C]">
+    <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+     <span class="body-md" >Repassword is required.</span>
+   
+  </div>
+ }
+   @if(RegisterForm.hasError('mistach') && RegisterForm.get("rePassword")?.touched ){
+   <div class="mt-1 flex items-start gap-2 rounded-2xl border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-sm text-[#B91C1C]">
+    <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+     
+     <span class="body-md" >Repassword is Confirm</span>
+  </div>
+ }
+
+
+
+      <!-- Password strength -->
+      <div>
+        <div class="flex justify-between text-sm text-[#7a6a5f]">
+          <span>Password Strength</span>
+          <span id="strength-text" [style.color]="string.color" >{{ string.label }}</span>
+        </div>
+        <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-[#ece6dc]">
+          <div id="strength-bar" 
+          class="h-full w-0 rounded-full transition-all duration-300" 
+         [style.width]="string.width"
+      [style.backgroundColor]="string.color">
+          ></div>
+        </div>
+      </div>
+
+      <!-- Terms -->
+      <label class="flex cursor-pointer items-center gap-3">
+        <input type="checkbox"  formControlName="term"
+          class="h-5 w-5 rounded-md border-2 border-[#d8d8d7] bg-[#FAF6F0] text-[#E75F0F] focus:ring-[#e68c58]">
+        <span class="body-md">
+          I agree to the
+          <a href="#" class="font-semibold text-[#F97316] hover:underline">Wanas Community Charter</a>
+          &amp;
+          <a href="#" class="font-semibold text-[#F97316] hover:underline">Terms of Service</a>.
+        </span>
+      </label>
+
+   @if (
+  RegisterForm.get('term')?.invalid &&
+  (RegisterForm.get('term')?.touched || RegisterFormSubmitted)
+) {
+  <div
+    class="mt-1 flex items-start gap-2 rounded-2xl border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-sm text-[#B91C1C]"
+  >
+    <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+
+    <span class="body-md">
+      You must agree to the Wanas policy to create an account.
+    </span>
+  </div>
+}
+
+
+      <!-- Submit -->
+      <button 
+      [disabled]="isloading()"
+      
+        class="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#F97316] to-[#EA580C]
+               py-4 text-lg font-bold text-white shadow-[0_10px_25px_-8px_rgba(234,88,12,.6)]
+               transition hover:brightness-110 active:scale-[.98]">
+       @if (Notloading()) {
+         Create New Account <i class="fa-solid fa-arrow-right"></i>
+       }
+
+       @if (isloading()) {
+       
+      <svg class="h-5 w-5 shrink-0 animate-spin" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"/>
+      <path fill="currentColor" class="opacity-75" d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4z"/>
+    </svg>
+    <span class="leading-none">Logging in...</span>
+       }
+  
+
+      </button>
+      
+     
+      <!-- Divider + login -->
+      <div class="border-t border-[#e8e0d4] pt-4 text-center text-[#7a6a5f]">
+        Already have an account?
+        <a routerLink="/login" class="font-bold text-[#F97316] hover:underline">Sign in here</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- ================= INFO PANEL (desktop only) ================= -->
+  <aside class="hidden lg:flex flex-col justify-center gap-3 w-full">
+
+    <div class="flex items-center gap-4 min-w-0">
+      <div class="relative w-20 h-20 shrink-0 rounded-3xl border-4 border-[#F5DCC5] bg-[#FFF8F1] shadow-sm p-1.5 flex items-center justify-center">
+        <img src="/images/Logo..png" class="w-full h-full object-contain" alt="Wanas Logo" />
+        <span class="absolute -bottom-2 -right-2 flex items-center justify-center w-7 h-7">
+          <span class="absolute inset-0 rounded-full bg-orange-500/60 animate-ping"></span>
+          <span class="absolute inset-0 rounded-full bg-orange-500/40 animate-ping [animation-delay:0.6s]"></span>
+          <span class="relative flex items-center justify-center w-full h-full rounded-full bg-orange-500 border-2 border-[#FFF8F1] shadow">
+            <i class="fa-solid fa-heart text-white text-xs"></i>
+          </span>
+        </span>
+      </div>
+
+      <div class="leading-tight min-w-0">
+        <h1 class="headline-lg">
+          <span class="text-[#F97316]">Wanas</span>
+          <span class="text-black"> | The warmest &amp; closest community</span>
+        </h1>
+        <p class="headline-sm text-[#9D4300]">The warmest &amp; closest community ☕</p>
+      </div>
+    </div>
+
+    <!-- Intro -->
+    <div class="w-full bg-white rounded-3xl border-2 border-[#F5F0E9] shadow-sm p-4">
+      <h2 class="text-[#261A12] headline-md">Built for genuine human connection, not cold algorithms.</h2>
+      <p class="text-[#F97316] headline-sm flex items-center gap-2 mt-2">
+        <span class="relative inline-flex items-center justify-center text-xl">
+          <i class="fa-solid fa-certificate"></i>
+          <i class="fa-solid fa-check absolute text-xs text-white"></i>
+        </span>
+        <span>Your cozy corner to share moments with real friends.</span>
+      </p>
+    </div>
+
+    <!-- Feature cards -->
+    <div class="w-full bg-white rounded-3xl border-2 border-[#F5F0E9] shadow-sm p-4 flex items-center gap-4">
+      <div class="w-12 h-12 rounded-2xl bg-[#FFF0E5] flex items-center justify-center shrink-0">
+        <i class="fa-solid fa-people-roof text-[#F97316] text-xl"></i>
+      </div>
+      <div>
+        <h3 class="text-[#261A12] headline-sm">Warmest Family</h3>
+        <p class="text-[#7A6A5E] body-sm mt-0.5">Meaningful talks and souls like you under one roof.</p>
+      </div>
+    </div>
+
+    <div class="w-full bg-white rounded-3xl border-2 border-[#F5F0E9] shadow-sm p-4 flex items-center gap-4">
+      <div class="w-12 h-12 rounded-2xl bg-[#FFF0E5] flex items-center justify-center shrink-0">
+        <i class="fa-regular fa-heart text-[#F97316] text-xl"></i>
+      </div>
+      <div>
+        <h3 class="text-[#261A12] headline-sm">Unfiltered Real Posts</h3>
+        <p class="text-[#7A6A5E] body-sm mt-0.5">Share your days and experiences without vanity numbers.</p>
+      </div>
+    </div>
+
+    <div class="w-full bg-white rounded-3xl border-2 border-[#F5F0E9] shadow-sm p-4 flex items-center gap-4">
+      <div class="w-12 h-12 rounded-2xl bg-[#FFF0E5] flex items-center justify-center shrink-0">
+        <i class="fa-solid fa-user-lock text-[#F97316] text-xl"></i>
+      </div>
+      <div>
+        <h3 class="text-[#261A12] headline-sm">Total Privacy &amp; Safety</h3>
+        <p class="text-[#7A6A5E] body-sm mt-0.5">Your personal data protected by modern standards.</p>
+      </div>
+    </div>
+
+    <!-- Online now -->
+    <div class="w-full bg-white rounded-3xl border-2 border-[#F5F0E9] shadow-sm p-4 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="flex -space-x-3 shrink-0">
+          <span class="w-9 h-9 rounded-full bg-[#A0450C] text-white label-sm flex items-center justify-center border-2 border-white">Y</span>
+          <span class="w-9 h-9 rounded-full bg-[#F97316] text-white label-sm flex items-center justify-center border-2 border-white">A</span>
+          <span class="w-9 h-9 rounded-full bg-[#6B5344] text-white label-sm flex items-center justify-center border-2 border-white">K</span>
+        </div>
+        <span class="text-[#261A12] body-md">14,280 companions online now</span>
+      </div>
+      <span class="flex items-center gap-1.5 shrink-0 bg-[#E8FAF0] text-[#16A34A] border border-[#BFEBD2] rounded-full px-3 py-1 label-sm">
+        <span class="relative flex w-2 h-2">
+          <span class="absolute inset-0 rounded-full bg-[#22C55E] opacity-75 animate-ping"></span>
+          <span class="relative w-2 h-2 rounded-full bg-[#22C55E]"></span>
+        </span>
+        Live now
+      </span>
+    </div>
+  </aside>
+</section>

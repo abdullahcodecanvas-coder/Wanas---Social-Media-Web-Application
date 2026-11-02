@@ -1,0 +1,16 @@
+.hero-glow {
+  background:
+    radial-gradient(ellipse 50% 45% at 50% 22%, rgba(253, 186, 140, .45), transparent 70%),
+    #fdf8f1;
+}
+
+.zero-shadow {
+  filter: drop-shadow(0 14px 18px rgba(249, 115, 22, .28));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-floatZero,
+  .animate-tilt {
+    animation: none !important;
+  }
+}
